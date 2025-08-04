@@ -65,7 +65,7 @@ public class MoneyTransferServiceTests
         var toId = Guid.NewGuid();
         decimal amount = 50;
 
-        var fromAccount = new Account { Id = fromId, UserId = Guid.NewGuid(), Balance = 100 }; // UserId не співпадає з userId
+        var fromAccount = new Account { Id = fromId, UserId = Guid.NewGuid(), Balance = 100 };
 
         _accountRepoMock.Setup(r => r.GetAccountByidAsync(fromId)).ReturnsAsync(fromAccount);
 
