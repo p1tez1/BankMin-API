@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36327.8 d17.14
+VisualStudioVersion = 17.14.36327.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankMin-API", "BankMin-API\BankMin-API.csproj", "{419F9762-86BB-4665-8BD8-E7186BF2F116}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankTest", "BankTest\BankTest.csproj", "{2C05B001-CEBE-49A1-BE1D-80D865BF2D66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{419F9762-86BB-4665-8BD8-E7186BF2F116}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{419F9762-86BB-4665-8BD8-E7186BF2F116}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{419F9762-86BB-4665-8BD8-E7186BF2F116}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C05B001-CEBE-49A1-BE1D-80D865BF2D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C05B001-CEBE-49A1-BE1D-80D865BF2D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C05B001-CEBE-49A1-BE1D-80D865BF2D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C05B001-CEBE-49A1-BE1D-80D865BF2D66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
