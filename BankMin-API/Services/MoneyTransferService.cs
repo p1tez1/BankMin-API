@@ -10,11 +10,14 @@ namespace BankMin_API.Services
     {
         private readonly IAccountRepo _accountRepo;
         private readonly ILogger<Account> _logger;
+        private readonly ICurrencyRateService _currencyRateService;
         private readonly BankDbContext _dBcontext;
-        public MoneyTransferService(IAccountRepo accountRepo, ILogger<Account> logger, BankDbContext dbContext)
+
+        public MoneyTransferService(IAccountRepo accountRepo, ILogger<Account> logger, ICurrencyRateService currenceRateService, BankDbContext dbContext)
         {
             _accountRepo = accountRepo;
             _logger = logger;
+            _currencyRateService = currenceRateService;
             _dBcontext = dbContext;
         }
         public async Task SendMoney(Guid userId, Guid fromId, Guid toId, decimal amount)
@@ -44,14 +47,31 @@ namespace BankMin_API.Services
                     _logger.LogWarning("Invalid recipient account {ToId}", toId);
                     throw new KeyNotFoundException("Recipient account not found");
                 }
+                decimal usdToUahRate = await _currencyRateService.GetUsdToUahRateAsync();
 
-                fromAccount.Balance -= amount;
-                toAccount.Balance += amount;
+                if (fromAccount.Currency == toAccount.Currency)
+                {
+                    fromAccount.Balance -= amount;
+                    toAccount.Balance += amount;
+                    _logger.LogInformation("User {UserId} sent {Amount} from {FromId} to {ToId} UAH -> UAH", userId, amount, fromId, toId);
+                }
+
+                else if (fromAccount.Currency == Currency.USD && toAccount.Currency == Currency.UAH)
+                {
+                    fromAccount.Balance -= amount;
+                    toAccount.Balance += amount * usdToUahRate;
+                    _logger.LogInformation("User {UserId} sent {Amount} from {FromId} to {ToId} USD -> UAH", userId, amount, fromId, toId);
+                }
+                else
+                {
+                    fromAccount.Balance -= amount;
+                    toAccount.Balance += amount / usdToUahRate;
+                    _logger.LogInformation("User {UserId} sent {Amount} from {FromId} to {ToId} UAH -> USD", userId, amount, fromId, toId);
+                }
 
                 await _dBcontext.SaveChangesAsync();
-                await transaction.CommitAsync();
 
-                _logger.LogInformation("User {UserId} sent {Amount} from {FromId} to {ToId}", userId, amount, fromId, toId);
+                await transaction.CommitAsync();
             }
             catch (Exception ex)
             {

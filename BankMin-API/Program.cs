@@ -2,6 +2,7 @@ using BankMin_API.Features.AccountUseCase;
 using BankMin_API.Features.Auth;
 using BankMin_API.Infrastructure;
 using BankMin_API.Infrastructure.Repositories;
+using BankMin_API.Infrastructure.Services;
 using BankMin_API.Services;
 using BankMin_API.Services.IServices;
 using BankMin_API.Startup;
@@ -34,6 +35,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleRepo, RoleRepo>();
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 builder.Services.AddScoped<IMoneyTransferService, MoneyTransferService>();
+builder.Services.AddScoped<IMoneyTransferService, MoneyTransferService>();
+builder.Services.AddHttpClient<ICurrencyRateService, CurrencyRateService>();
+
 
 builder.JwtConfigure();
 
